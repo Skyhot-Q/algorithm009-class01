@@ -2,36 +2,65 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 )
 
+//func getHint(secret string, guess string) string {
+//	var countS, countG [10]int
+//	bulls, cows := 0,0
+//	for i := range secret{
+//		ns := int(secret[i] - '0')
+//		ng := int(guess[i] - '0')
+//		if ng == ns {
+//			bulls++
+//			continue
+//		}
+//
+//		if countG[ns] > 0 {
+//			cows++
+//			countG[ns]--
+//		} else {
+//			countS[ns]++
+//		}
+//
+//		if countS[ng] > 0 {
+//			cows++
+//			countS[ng]--
+//		} else {
+//			countG[ng]++
+//		}
+//	}
+//
+//	return fmt.Sprintf("%dA%dB", bulls, cows)
+//
+//}
+
 func getHint(secret string, guess string) string {
-	var countS, countG [10]int
-	bulls, cows := 0,0
-	for i := range secret{
-		ns := int(secret[i] - '0')
-		ng := int(guess[i] - '0')
-		if ng == ns {
-			bulls++
-			continue
-		}
-
-		if countG[ns] > 0 {
-			cows++
-			countG[ns]--
+	bull := 0
+	cow := 0
+	guessMap := make(map[int32]int)
+	secretMap := make(map[int32]int)
+	for _, v := range secret {
+		secretMap[v] += 1
+	}
+	for i, v := range guess {
+		if guess[i] == secret[i] {
+			bull++
+			secretMap[v]--
 		} else {
-			countS[ns]++
-		}
-
-		if countS[ng] > 0 {
-			cows++
-			countS[ng]--
-		} else {
-			countG[ng]++
+			guessMap[v]++
 		}
 	}
-
-	return fmt.Sprintf("%dA%dB", bulls, cows)
-
+	for k, v := range guessMap {
+		if i, ok := secretMap[k]; ok && i !=0 {
+			if i <= v {
+				cow += i
+			} else {
+				cow += v
+			}
+		}
+	}
+	return strconv.Itoa(bull)+ "A"+ strconv.Itoa(cow)+ "B"
 }
 
 func main() {
