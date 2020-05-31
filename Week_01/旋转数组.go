@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 )
+
 // 环转替换
 //func rotate(nums []int, k int) {
 //	numLen := len(nums)
@@ -34,16 +35,25 @@ func rotate(nums []int, k int) {
 	reverse(nums, k, numsLen-1)
 }
 
+//func reverse(num []int, start int, end int) {
+//	for start < end {
+//		temp := num[start]
+//		num[start] = num[end]
+//		num[end] = temp
+//		start++
+//		end--
+//	}
+//}
+
 func reverse(num []int, start int, end int) {
 	for start < end {
-		temp := num[start]
+		tmp := num[start]
 		num[start] = num[end]
-		num[end] = temp
+		num[end] = tmp
 		start++
 		end--
 	}
 }
-
 func main() {
 	testCase := []map[int][]int{
 		{3: {1, 2, 3, 4, 5, 6, 7}},
