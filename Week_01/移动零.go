@@ -17,7 +17,7 @@ import "fmt"
 
 func moveZeroes(nums []int) {
 	slow := 0
-	for fast, n := range  nums {
+	for fast, n := range nums {
 		if n != 0 {
 			nums[slow] = n
 			if slow != fast {

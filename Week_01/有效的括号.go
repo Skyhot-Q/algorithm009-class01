@@ -40,34 +40,57 @@ import "fmt"
 //}
 
 // 第二遍： 2020/05/26 21:43
+//func isValid(s string) bool {
+//	symbol := "(){}[]"
+//	symbolMap := make(map[int32]int32)
+//	var pre int32
+//	for i, v := range symbol {
+//		if i%2 == 0 {
+//			pre = v
+//		} else {
+//			symbolMap[pre] = v
+//		}
+//	}
+//	stack := make([]int32, 1, len(s))
+//
+//	for _, v := range s {
+//		stackLen := len(stack)
+//		if v != symbolMap[stack[stackLen-1]] {
+//			stack = append(stack, v)
+//		} else {
+//			stack = stack[:stackLen-1]
+//		}
+//	}
+//
+//	if len(stack) > 1 {
+//		return false
+//	} else {
+//		return true
+//	}
+//}
+
 func isValid(s string) bool {
-	symbol := "(){}[]"
-	symbolMap := make(map[int32]int32)
-	var pre int32
-	for i, v := range symbol {
-		if i%2 == 0 {
-			pre = v
-		} else {
-			symbolMap[pre] = v
-		}
+	symbol := map[int32]int32{
+		'(': ')',
+		'{': '}',
+		'[': ']',
 	}
+
 	stack := make([]int32, 1, len(s))
 
-	for _, v := range s {
-		stackLen := len(stack)
-		if v != symbolMap[stack[stackLen-1]] {
-			stack = append(stack, v)
+	for _, b := range s {
+		if b == symbol[stack[len(stack)-1]] {
+			stack = stack[:len(stack)-1]
 		} else {
-			stack = stack[:stackLen-1]
+			stack = append(stack, b)
 		}
 	}
-
 	if len(stack) > 1 {
 		return false
-	} else {
-		return true
-	}
+ 	}
+ 	return true
 }
+
 func main() {
 	testCase := []string{
 		"[](){}",
